@@ -62,39 +62,20 @@ function getStatus(cbConnected, cbNoAuth, cbOther)
 }
 function fun()
 {
-	getStatus();
-	/*FB.login(function(response) {
-		if (response.authResponse) {
-			console.log('Welcome!  Fetching your information.... ');
-			FB.api('/me', function(response) {
-			console.log('Good to see you, ' + response.name + '.');
-			});
-		} else {
-			console.log('User cancelled login or did not fully authorize.');
-		}
-	});*/
-	/*
-	var conn = function(response) {
-			var uid = response.authResponse.userID;
-			var accessToken = response.authResponse.accessToken;
-			console.log("Connected: "+uid);
-		};
-	var noConn = function(nullResp) {
+	if (FB.getUserID()=="")
+	{
 		FB.login(function(response) {
-			if (response.authResponse) {
-				console.log('Welcome!  Fetching your information.... ');
-				FB.api('/me', function(response) {
-				console.log('Good to see you, ' + response.name + '.');
-				});
-			} else {
-				console.log('User cancelled login or did not fully authorize.');
-			}
-		});
-	};
-	conn = function(a) { alert('conn'); };
-	noConn = function(a) { alert('noConn'); };
-	getStatus(conn, noConn, function() {});
-	*/
+				if (response.authResponse) {
+					console.log('Welcome!  Fetching your information.... ');
+					FB.api('/me', function(response) {
+					console.log('Good to see you, ' + response.name + '.');
+					});
+				} else {
+					console.log('User cancelled login or did not fully authorize.');
+				}
+			}, {scope: 'user_likes, read_stream'}
+		);
+	}
 }
 
 
@@ -103,6 +84,7 @@ function fun()
 //Document Ready
 $(document).ready( function() {
 	$("#dvMain").tabs();
+	fun();
 });
 
 </script>
