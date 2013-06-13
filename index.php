@@ -1,4 +1,27 @@
 <?php //Bismillah
+
+//SAMPLE CODE from http://developers.facebook.com/docs/appsonfacebook/tutorial/#channels
+
+$app_id = "169481549893709";
+
+$canvas_page = "http://apps.facebook.com/likeshistory/";
+
+$auth_url = "http://www.facebook.com/dialog/oauth?client_id=" 
+	. $app_id . "&redirect_uri=" . urlencode($canvas_page);
+
+$signed_request = $_REQUEST["signed_request"];
+
+list($encoded_sig, $payload) = explode('.', $signed_request, 2); 
+
+$data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+
+if (empty($data["user_id"])) {
+	echo("<script> top.location.href='" . $auth_url . "'</script>");
+} else {
+	echo ("Welcome User: " . $data["user_id"]);
+} 
+//END SAMPLE
+
 ?>
 <head>
 <title>LikesHistory</title>
